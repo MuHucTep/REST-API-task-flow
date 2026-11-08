@@ -4,18 +4,21 @@ import (
 	"log"
 	"net/http"
 
+	"github.com/MuHucTep/REST-API-task-flow/internal/config"
 	"github.com/MuHucTep/REST-API-task-flow/internal/handler"
+	"github.com/go-chi/chi/v5"
 )
 
 func main() {
-	http.HandleFunc("/health", handler.Health)
-	http.HandleFunc("/", handler.Root)
+	cfg := config.Load()
+	r := chi.NewRouter()
 
-	addr := ":8000"
+	r.Get("/health", handler.Health)
+	r.Get("/", handler.Root)
 
-	log.Printf("Server is starting on %s\n", addr)
+	log.Printf("Server is starting on %s\n", cfg.HTTPAddr)
 
-	if err := http.ListenAndServe(addr, nil); err != nil {
+	if err := http.ListenAndServe(cfg.HTTPAddr, r); err != nil {
 		log.Fatalf("Failed to start server: %v", err)
 	}
 }
