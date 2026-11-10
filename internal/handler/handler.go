@@ -1,18 +1,19 @@
 package handler
 
 import (
-	"fmt"
 	"net/http"
+
+	"github.com/MuHucTep/REST-API-task-flow/internal/pkg/response"
 )
 
 func Health(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Content-Type", "application/json")
-	w.WriteHeader(http.StatusOK)
-	fmt.Fprint(w, `{"status":"ok"}`)
+	response.JSON(w, http.StatusOK, map[string]string{
+		"status": "ok",
+	})
 }
 
 func Root(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Content-Type", "application/json")
-	w.WriteHeader(http.StatusOK)
-	fmt.Fprint(w, `{"message":"TaskFlow API"}`)
+	response.JSON(w, http.StatusOK, map[string]string{
+		"message": "TaskFlow API",
+	})
 }
