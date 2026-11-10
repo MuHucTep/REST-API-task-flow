@@ -6,12 +6,16 @@ import (
 
 	"github.com/MuHucTep/REST-API-task-flow/internal/config"
 	"github.com/MuHucTep/REST-API-task-flow/internal/handler"
+	"github.com/MuHucTep/REST-API-task-flow/internal/middleware"
+
 	"github.com/go-chi/chi/v5"
 )
 
 func main() {
 	cfg := config.Load()
 	r := chi.NewRouter()
+
+	r.Use(middleware.Logger)
 
 	r.Get("/health", handler.Health)
 	r.Get("/", handler.Root)
