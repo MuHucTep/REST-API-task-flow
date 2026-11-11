@@ -27,6 +27,8 @@ func main() {
 	}
 	defer db.Close()
 
+	log.Println("Successfully connected to database")
+
 	r := chi.NewRouter()
 
 	r.Use(middleware.Recovery)
