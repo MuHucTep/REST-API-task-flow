@@ -7,12 +7,26 @@ import (
 	"github.com/MuHucTep/REST-API-task-flow/internal/config"
 	"github.com/MuHucTep/REST-API-task-flow/internal/handler"
 	"github.com/MuHucTep/REST-API-task-flow/internal/middleware"
+	"github.com/MuHucTep/REST-API-task-flow/internal/repository"
 
 	"github.com/go-chi/chi/v5"
 )
 
 func main() {
 	cfg := config.Load()
+
+	db, err := repository.NewDB(
+		cfg.DBHost,
+		cfg.DBPort,
+		cfg.DBUser,
+		cfg.DBPswd,
+		cfg.DBName,
+	)
+	if err != nil {
+		log.Fatalf("Failed to connect to database: %v", err)
+	}
+	defer db.Close()
+
 	r := chi.NewRouter()
 
 	r.Use(middleware.Recovery)
