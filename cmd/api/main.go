@@ -15,8 +15,8 @@ func main() {
 	cfg := config.Load()
 	r := chi.NewRouter()
 
-	r.Use(middleware.Logger)
 	r.Use(middleware.Recovery)
+	r.Use(middleware.Logger)
 
 	r.Get("/health", handler.Health)
 	r.Get("/", handler.Root)
